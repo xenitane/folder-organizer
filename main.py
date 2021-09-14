@@ -18,6 +18,8 @@ def organize_folder(folder):
         os.mkdir(folder+"/Softwares")
     if "Compressed" not in files:
         os.mkdir(folder+"/Compressed")
+    if "Pictures" not in files:
+        os.mkdir(folder+"/Pictures")
     if "Other" not in files:
         os.mkdir(folder+"/Other")
 
@@ -37,6 +39,8 @@ def organize_folder(folder):
                 shutil.move(folder+"/"+file, folder+"/Softwares")
             elif extension in exts.comp:
                 shutil.move(folder+"/"+file, folder+"/Compressed")
+            elif extension in exts.images:
+                shutil.move(folder+"/"+file, folder+"/Pictures")
             else:
                 shutil.move(folder+"/"+file, folder+"/Other")
 
@@ -54,11 +58,11 @@ def validate(folder):
 if __name__ == '__main__':
     l = len(sys.argv)
     if l == 1:
-        organize_folder(".")
-    elif l == 2:
-        res = validate(sys.argv[1])
-        if(res != 0):
-            organize_folder(res)
+        organize_folder(os.cwd())
     else:
-        print("!!!Enter folder path to organize.!!!")
-        exit(0)
+        q = 1
+        while q != l:
+            val = validate(sys.argv[q])
+            if(val != 0):
+                organize_folder(val)
+            q += 1
